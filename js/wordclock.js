@@ -67,7 +67,7 @@ const WordClock = (function () {
             //	12-hour hour should be done looping through the next
             //	array and durning on that hour number.
             var a = ['twelve', 'one', 'two', 'three', 'four', 'five2', 'six', 'seven', 'eight', 'nine', 'ten2', 'eleven'];
-            for (const idx = 0; idx < 12; idx++) {
+            for (let idx = 0; idx < 12; idx++) {
                 if (hrs % 12 == idx) {
                     this.turnOn(a[idx]);
                     break;
