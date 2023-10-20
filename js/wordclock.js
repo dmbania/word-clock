@@ -99,10 +99,12 @@ class WordClock {
         const modifier = (mins > 34) ? 1 : 0;
         hours += modifier;
 
-        if (modifier) {
-            this.#turnOn('to');
-        } else {
-            this.#turnOn('past');
+        if (mins > 5) {
+            if (modifier === 1) {
+                this.#turnOn('to');
+            } else {
+                this.#turnOn('past');
+            }
         }
 
         //	for some reason I had the thought figuring out the 12-hour hour should be done looping through the next
