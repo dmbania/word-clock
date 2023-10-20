@@ -55,15 +55,12 @@ class WordClock {
     #resetClock() {
         const clck = document.getElementsByClassName('clock');
         const rws = clck[0].children;
-        const r_len = rws.length;
 
-        for (let idx = 0; idx < r_len; idx++) {
+        for (const row of rws) {
+            const spns = row.children;
 
-            const spns = rws[idx].children;
-            const s_len = spns.length;
-
-            for (let jdx = 0; jdx < s_len; jdx++) {
-                this.#turnOff(spns[jdx]);
+            for (const spn of spns) {
+                this.#turnOff(spn);
             }
         }
 
