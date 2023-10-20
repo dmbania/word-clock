@@ -1,0 +1,70 @@
+        @font-face {
+            font-family: 'Josefin Sans';
+            src: url('http://fonts.googleapis.com/css?family=Josefin+Sans');
+        }
+
+        span {
+            text-transform: uppercase;
+            font-family: 'Josefin Sans', sans-serif;
+            color: #555;
+            display: inline-block;
+            letter-spacing: 1px;
+        }
+
+        .clock {
+            height: 200px;
+            width: 200px;
+            background-color: #000000;
+            padding: 20px;
+            margin: 125px auto;
+        }
+
+        .row {
+            height: 25px;
+            text-align: justify;
+        }
+
+        .on {
+            color: white;
+        }
+
+        .oclock,
+        .ten,
+        .twenty,
+        .to,
+        .three,
+        .five2,
+        .eight,
+        .eleven {
+            float: right;
+        }
+
+        .half {
+            margin-left: 35px;
+            margin-right: 35px;
+        }
+
+        .minutes {
+            margin-left: 23px;
+            margin-right: 23px;
+        }
+
+        .one {
+            margin-left: 26px;
+            margin-right: 22px;
+        }
+
+        .four {
+            margin-left: 26px;
+            margin-right: 26px;
+        }
+
+        .seven {
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+
+        .ten2 {
+            margin-left: 18px;
+            margin-right: 18px;
+        }
