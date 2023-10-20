@@ -4,11 +4,11 @@ class WordClock {
         this.#draw();
     }
 
-    #drawClock(b) {
+    #drawClock(body) {
         //we'll do something here so that we'll do a bunch of checking
         //so that if the passed is an object we'll use it otherwise
         // we'll use the body.
-        b = b || document.getElementsByTagName('body');
+        body = body || document.getElementsByTagName('body');
 
         // define the wordclock matrix
         const rows = {
@@ -23,26 +23,26 @@ class WordClock {
         };
 
         //	define your clock
-        const clck = document.createElement('div');
-        clck.setAttribute('class', 'clock');
+        const clockBox = document.createElement('div');
+        clockBox.setAttribute('class', 'clock');
 
         //	for each row, and each element in the each row build your wordclock
         for (const row in rows) {
-            const r = document.createElement('div');
-            r.setAttribute('class', 'row');
+            const clockRow = document.createElement('div');
+            clockRow.setAttribute('class', 'row');
 
-            for (const spn in rows[row]) {
-                const s = document.createElement('span');
-                s.setAttribute('class', spn);
-                s.textContent = rows[row][spn];
-                r.appendChild(s);
+            for (const clockWord in rows[row]) {
+                const wordSpan = document.createElement('span');
+                wordSpan.setAttribute('class', clockWord);
+                wordSpan.textContent = rows[row][clockWord];
+                clockRow.appendChild(wordSpan);
             }
 
-            clck.appendChild(r);
+            clockBox.appendChild(clockRow);
         }
 
         //	put your clock on the page
-        b[0].appendChild(clck);
+        body[0].appendChild(clockBox);
     }
 
     #draw() {
@@ -53,37 +53,37 @@ class WordClock {
 
     // turn all your words off. Turn on It Is, O'Clock, and Minutes
     #resetClock() {
-        const clck = document.getElementsByClassName('clock');
-        const rws = clck[0].children;
+        const clockBox = document.getElementsByClassName('clock');
+        const clockRows = clockBox[0].children;
 
-        for (const row of rws) {
-            const spns = row.children;
-
-            for (const spn of spns) {
-                this.#turnOff(spn);
+        for (const row of clockRows) {
+            for (const clockWord of row.children) {
+                this.#turnOff(clockWord);
             }
         }
 
-        this.#turnOn('itis'); this.#turnOn('oclock'); this.#turnOn('minutes');
+        this.#turnOn('itis');
+        this.#turnOn('oclock');
+        this.#turnOn('minutes');
     }
 
     // turn off, whatever element passed to this by removing the 'on' class
-    #turnOff(el) {
-        if (typeof el === 'object') {
-            el.className = el.className.replace(' on', '');
+    #turnOff(clockWord) {
+        if (typeof clockWord === 'object') {
+            clockWord.className = clockWord.className.replace(' on', '');
         } else {
-            const i = document.getElementsByClassName(el);
-            i[0].className = i[0].className.replace(' on', '');
+            const clockWordById = document.getElementsByClassName(clockWord);
+            clockWordById[0].className = clockWordById[0].className.replace(' on', '');
         }
     }
 
     // turn on, whatever element passed to this by adding the 'on' class
-    #turnOn(el) {
-        if (typeof el === 'object') {
-            el.className = el.className + ' on';
+    #turnOn(clockWord) {
+        if (typeof clockWord === 'object') {
+            clockWord.className = clockWord.className + ' on';
         } else {
-            const i = document.getElementsByClassName(el);
-            i[0].className = i[0].className + ' on';
+            const clockWordById = document.getElementsByClassName(clockWord);
+            clockWordById[0].className = clockWordById[0].className + ' on';
         }
     }
 
@@ -96,11 +96,11 @@ class WordClock {
 
         //	when we are after the half hour we will talk about the number of minutes until
         //	the next hour
-        const modifier = (mins > 34) ? 1 : 0;
-        hours += modifier;
+        const toAfterModifier = (mins > 34) ? 1 : 0;
+        hours += toAfterModifier;
 
         if (mins > 5) {
-            if (modifier === 1) {
+            if (toAfterModifier === 1) {
                 this.#turnOn('to');
             } else {
                 this.#turnOn('past');
@@ -109,10 +109,10 @@ class WordClock {
 
         //	for some reason I had the thought figuring out the 12-hour hour should be done looping through the next
         //	array and turning on that hour number.
-        const a = ['twelve', 'one', 'two', 'three', 'four', 'five2', 'six', 'seven', 'eight', 'nine', 'ten2', 'eleven'];
+        const houseClasses = ['twelve', 'one', 'two', 'three', 'four', 'five2', 'six', 'seven', 'eight', 'nine', 'ten2', 'eleven'];
         for (let idx = 0; idx < 12; idx++) {
             if (hours % 12 == idx) {
-                this.#turnOn(a[idx]);
+                this.#turnOn(houseClasses[idx]);
                 break;
             }
         }
