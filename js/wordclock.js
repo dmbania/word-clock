@@ -177,6 +177,5 @@ const WordClock = (function () {
 WordClock.prototype.draw = function () {
     this.drawClock();
     this.setTime(new Date());
-    const obj = this;
-    setInterval(function () { obj.setTime(new Date()); }, 1000);
+    setInterval(() => { this.setTime(new Date()); }, 1000);
 };
