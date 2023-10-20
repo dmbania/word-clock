@@ -108,8 +108,8 @@ class WordClock {
 
         //	for some reason I had the thought figuring out the
         //	12-hour hour should be done looping through the next
-        //	array and durning on that hour number.
-        var a = ['twelve', 'one', 'two', 'three', 'four', 'five2', 'six', 'seven', 'eight', 'nine', 'ten2', 'eleven'];
+        //	array and turning on that hour number.
+        const a = ['twelve', 'one', 'two', 'three', 'four', 'five2', 'six', 'seven', 'eight', 'nine', 'ten2', 'eleven'];
         for (let idx = 0; idx < 12; idx++) {
             if (hrs % 12 == idx) {
                 this.#turnOn(a[idx]);
@@ -119,7 +119,7 @@ class WordClock {
 
         //	determine which 5-minutes do we need to display,
         //	then turn that word on
-        var new_mins = Math.floor(mins / 5) * 5;
+        const new_mins = Math.floor(mins / 5) * 5;
 
         switch (new_mins) {
             case 5:
