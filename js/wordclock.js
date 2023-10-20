@@ -88,17 +88,16 @@ class WordClock {
     }
 
     #setTime() {
-        var dt = new Date();
-        var hrs = dt.getHours();
-        var mins = dt.getMinutes();
+        const dateTime = new Date();
+        const mins = dateTime.getMinutes();
+        let hours = dateTime.getHours();
 
         this.#resetClock();
 
-        //	when we are after the half hour we will
-        //	talk about the number of minutes until
+        //	when we are after the half hour we will talk about the number of minutes until
         //	the next hour
-        var modifier = (mins > 34) ? 1 : 0;
-        hrs += modifier;
+        const modifier = (mins > 34) ? 1 : 0;
+        hours += modifier;
 
         if (modifier) {
             this.#turnOn('to');
@@ -106,22 +105,20 @@ class WordClock {
             this.#turnOn('past');
         }
 
-        //	for some reason I had the thought figuring out the
-        //	12-hour hour should be done looping through the next
+        //	for some reason I had the thought figuring out the 12-hour hour should be done looping through the next
         //	array and turning on that hour number.
         const a = ['twelve', 'one', 'two', 'three', 'four', 'five2', 'six', 'seven', 'eight', 'nine', 'ten2', 'eleven'];
         for (let idx = 0; idx < 12; idx++) {
-            if (hrs % 12 == idx) {
+            if (hours % 12 == idx) {
                 this.#turnOn(a[idx]);
                 break;
             }
         }
 
-        //	determine which 5-minutes do we need to display,
-        //	then turn that word on
-        const new_mins = Math.floor(mins / 5) * 5;
+        //	determine which 5-minutes do we need to display, then turn that word on
+        const fiveMinuteBlock = Math.floor(mins / 5) * 5;
 
-        switch (new_mins) {
+        switch (fiveMinuteBlock) {
             case 5:
                 this.#turnOn('five');
                 break;
