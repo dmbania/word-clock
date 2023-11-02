@@ -122,42 +122,30 @@ class WordClock {
 
         switch (fiveMinuteBlock) {
             case 5:
+            case 55:
                 this.#turnOn('five');
                 break;
             case 10:
+            case 50:
                 this.#turnOn('ten');
                 break;
             case 15:
+            case 45:
                 this.#turnOn('quarter');
                 this.#turnOff('minutes');
                 break;
             case 20:
+            case 40:
                 this.#turnOn('twenty');
                 break;
             case 25:
+            case 35:
                 this.#turnOn('twenty');
                 this.#turnOn('five');
                 break;
             case 30:
                 this.#turnOn('half');
                 this.#turnOff('minutes');
-                break;
-            case 35:
-                this.#turnOn('twenty');
-                this.#turnOn('five');
-                break;
-            case 40:
-                this.#turnOn('twenty');
-                break;
-            case 45:
-                this.#turnOn('quarter');
-                this.#turnOff('minutes');
-                break;
-            case 50:
-                this.#turnOn('ten');
-                break;
-            case 55:
-                this.#turnOn('five');
                 break;
             default:
                 this.#turnOff('minutes');
