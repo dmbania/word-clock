@@ -13,7 +13,7 @@ class WordClock {
         // define the wordclock matrix
         const rows = {
             'r1': { 'itis': 'it is', 'half': 'half', 'ten': 'ten' },
-            'r2': { 'quarter': 'quarter', 'twenty': 'twenty' },
+            'r2': { 'quarter': 'a quarter', 'twenty': 'twenty' },
             'r3': { 'five': 'five', 'minutes': 'minutes', 'to': 'to' },
             'r4': { 'past': 'past', 'one': 'one', 'three': 'three' },
             'r5': { 'two': 'two', 'four': 'four', 'five2': 'five' },
