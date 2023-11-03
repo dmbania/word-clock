@@ -11,7 +11,7 @@ class WordClock {
         body = body || document.getElementsByTagName('body');
 
         // define the wordclock matrix
-        const newRows = [
+        const rowsAndWords = [
             { words: [{ class: 'itis', word: 'it is' }, { class: 'half', word: 'half' }, { class: 'ten', word: 'ten' }] },
             { words: [{ class: 'quarter', word: 'a quarter' }, { class: 'twenty', word: 'twenty' }] },
             { words: [{ class: 'five', word: 'five' }, { class: 'minutes', word: 'minutes' }, { class: 'to', word: 'to' }] },
@@ -27,7 +27,7 @@ class WordClock {
         clockBox.setAttribute('class', 'clock');
 
         //	for each row, and each element in the each row build your wordclock
-        for (const row of newRows) {
+        for (const row of rowsAndWords) {
             const clockRow = document.createElement('div');
             clockRow.setAttribute('class', 'row');
 
