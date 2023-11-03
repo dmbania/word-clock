@@ -1,37 +1,37 @@
-        @font-face {
-            font-family: 'Josefin Sans';
-            src: url('http://fonts.googleapis.com/css?family=Josefin+Sans');
-        }
+@font-face {
+    font-family: 'Josefin Sans';
+    src: url('http://fonts.googleapis.com/css?family=Josefin+Sans');
+}
 
-        span {
-            text-transform: uppercase;
-            font-family: 'Josefin Sans', sans-serif;
-            color: #555;
-            display: inline-block;
-            letter-spacing: 1px;
-            flex: 1;
-        }
+span {
+    text-transform: uppercase;
+    font-family: 'Josefin Sans', sans-serif;
+    color: #555;
+    display: inline-block;
+    letter-spacing: 1px;
+    flex: 1;
+}
 
-        .clock {
-            width: 220px;
-            background-color: #000000;
-            padding: 20px;
-            margin: 125px auto;
-        }
+.clock {
+    width: 220px;
+    background-color: #000000;
+    padding: 20px;
+    margin: 125px auto;
+}
 
-        .row {
-            height: 25px;
-            display: flex;
-        }
+.row {
+    height: 25px;
+    display: flex;
+}
 
-        span:nth-child(2) {
-            text-align: center;
-        }
+span:nth-child(2) {
+    text-align: center;
+}
 
-        span:last-child {
-            text-align: right;
-        }
+span:last-child {
+    text-align: right;
+}
 
-        .on {
-            color: white;
-        }
+.on {
+    color: white;
+}
