@@ -11,30 +11,30 @@ class WordClock {
         body = body || document.getElementsByTagName('body');
 
         // define the wordclock matrix
-        const rows = {
-            'r1': { 'itis': 'it is', 'half': 'half', 'ten': 'ten' },
-            'r2': { 'quarter': 'a quarter', 'twenty': 'twenty' },
-            'r3': { 'five': 'five', 'minutes': 'minutes', 'to': 'to' },
-            'r4': { 'past': 'past', 'one': 'one', 'three': 'three' },
-            'r5': { 'two': 'two', 'four': 'four', 'five2': 'five' },
-            'r6': { 'six': 'six', 'seven': 'seven', 'eight': 'eight' },
-            'r7': { 'nine': 'nine', 'ten2': 'ten', 'eleven': 'eleven' },
-            'r8': { 'twelve': 'twelve', 'oclock': 'o\'clock' }
-        };
+        const newRows = [
+            { words: [{ class: 'itis', word: 'it is' }, { class: 'half', word: 'half' }, { class: 'ten', word: 'ten' }] },
+            { words: [{ class: 'quarter', word: 'a quarter' }, { class: 'twenty', word: 'twenty' }] },
+            { words: [{ class: 'five', word: 'five' }, { class: 'minutes', word: 'minutes' }, { class: 'to', word: 'to' }] },
+            { words: [{ class: 'past', word: 'past' }, { class: 'one', word: 'one' }, { class: 'three', word: 'three' }] },
+            { words: [{ class: 'two', word: 'two' }, { class: 'four', word: 'four' }, { class: 'five2', word: 'five' }] },
+            { words: [{ class: 'six', word: 'six' }, { class: 'seven', word: 'seven' }, { class: 'eight', word: 'eight' }] },
+            { words: [{ class: 'nine', word: 'nine' }, { class: 'ten2', word: 'ten' }, { class: 'eleven', word: 'eleven' }] },
+            { words: [{ class: 'twelve', word: 'twelve' }, { class: 'oclock', word: 'o\'clock' }] },
+        ];
 
         //	define your clock
         const clockBox = document.createElement('div');
         clockBox.setAttribute('class', 'clock');
 
         //	for each row, and each element in the each row build your wordclock
-        for (const row in rows) {
+        for (const row of newRows) {
             const clockRow = document.createElement('div');
             clockRow.setAttribute('class', 'row');
 
-            for (const clockWord in rows[row]) {
+            for (const word of row.words) {
                 const wordSpan = document.createElement('span');
-                wordSpan.setAttribute('class', clockWord);
-                wordSpan.textContent = rows[row][clockWord];
+                wordSpan.setAttribute('class', word.class);
+                wordSpan.textContent = word.word;
                 clockRow.appendChild(wordSpan);
             }
 
