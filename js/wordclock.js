@@ -97,21 +97,28 @@ class WordClock {
         let hours24 = dateTime.getHours();
         let hours = dateTime.getHours() % 12;
 
-        return {
-            mins, hours24, hours
-        };
-    }
-
-    #setTime() {
-        let { mins, hours24, hours } = this.#getDate();
-
-        this.#resetClock();
-
         //	when we are after the half hour we will talk about
         //  the number of minutes until the next hour
         const toAfterModifier = (mins > 34) ? 1 : 0;
         hours += toAfterModifier;
 
+        return {
+            mins, hours24, hours, toAfterModifier
+        };
+    }
+
+    #setTime() {
+        let { mins, hours24, hours, toAfterModifier } = this.#getDate();
+
+        this.#resetClock();
+        this.#setHours(hours);
+        this.#setMinutes(mins);
+        this.#setToPast(mins, toAfterModifier);
+        this.#setMidnightNoon(hours24, toAfterModifier);
+        this.#setMorningAfternoonEveningNight(hours24);
+    }
+
+    #setToPast(mins, toAfterModifier) {
         if (mins > 5) {
             if (toAfterModifier === 1) {
                 this.#turnOn('to');
@@ -119,11 +126,6 @@ class WordClock {
                 this.#turnOn('past');
             }
         }
-
-        this.#setMidnightNoon(hours24, toAfterModifier);
-        this.#setMorningAfternoonEveningNight(hours24);
-        this.#setHours(hours);
-        this.#setMinutes(mins);
     }
 
     #setMorningAfternoonEveningNight(hours24) {
