@@ -20,6 +20,7 @@ class WordClock {
             { words: [{ class: 'six', word: 'six' }, { class: 'seven', word: 'seven' }, { class: 'eight', word: 'eight' }] },
             { words: [{ class: 'nine', word: 'nine' }, { class: 'ten2', word: 'ten' }, { class: 'eleven', word: 'eleven' }] },
             { words: [{ class: 'twelve', word: 'twelve' }, { class: 'oclock', word: 'o\'clock' }] },
+            { words: [ { class: 'midnight', word: 'midnight' }, { class: 'noon', word: 'noon' }] },
         ];
 
         //	define your clock
@@ -90,12 +91,13 @@ class WordClock {
     #setTime() {
         const dateTime = new Date();
         const mins = dateTime.getMinutes();
-        let hours = dateTime.getHours();
+        let hours24 = dateTime.getHours();
+        let hours = dateTime.getHours() % 12;
 
         this.#resetClock();
 
-        //	when we are after the half hour we will talk about the number of minutes until
-        //	the next hour
+        //	when we are after the half hour we will talk about
+        //  the number of minutes until the next hour
         const toAfterModifier = (mins > 34) ? 1 : 0;
         hours += toAfterModifier;
 
@@ -107,15 +109,16 @@ class WordClock {
             }
         }
 
-        //	for some reason I had the thought figuring out the 12-hour hour should be done looping through the next
-        //	array and turning on that hour number.
-        const houseClasses = ['twelve', 'one', 'two', 'three', 'four', 'five2', 'six', 'seven', 'eight', 'nine', 'ten2', 'eleven'];
-        for (let idx = 0; idx < 12; idx++) {
-            if (hours % 12 == idx) {
-                this.#turnOn(houseClasses[idx]);
-                break;
-            }
+        if (hours24 === 0) {
+            this.#turnOn('midnight');
         }
+
+        if (hours24 === 12) {
+            this.#turnOn('noon');
+        }
+
+        const houseClasses = ['twelve', 'one', 'two', 'three', 'four', 'five2', 'six', 'seven', 'eight', 'nine', 'ten2', 'eleven'];
+        this.#turnOn(houseClasses[hours]);
 
         //	determine which 5-minutes do we need to display, then turn that word on
         const fiveMinuteBlock = Math.floor(mins / 5) * 5;
