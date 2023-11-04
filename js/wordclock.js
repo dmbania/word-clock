@@ -20,7 +20,10 @@ class WordClock {
             { words: [{ class: 'six', word: 'six' }, { class: 'seven', word: 'seven' }, { class: 'eight', word: 'eight' }] },
             { words: [{ class: 'nine', word: 'nine' }, { class: 'ten2', word: 'ten' }, { class: 'eleven', word: 'eleven' }] },
             { words: [{ class: 'twelve', word: 'twelve' }, { class: 'oclock', word: 'o\'clock' }] },
-            { words: [ { class: 'midnight', word: 'midnight' }, { class: 'noon', word: 'noon' }] },
+            { words: [{ class: 'midnight', word: 'midnight' }, { class: 'noon', word: 'noon' }] },
+            { words: [{ class: 'inthe', word: 'in the' }, { class: 'morning', word: 'morning' }] },
+            { words: [{ class: 'afternoon', word: 'afternoon' }, { class: 'evening', word: 'evening' }] },
+            { words: [{ class: 'atnight', word: 'at night' }] },
         ];
 
         //	define your clock
@@ -115,6 +118,25 @@ class WordClock {
 
         if (hours24 === 12) {
             this.#turnOn('noon');
+        }
+
+        if (hours24 >= 1 && hours24 <= 11) {
+            this.#turnOn('inthe');
+            this.#turnOn('morning');
+        }
+
+        if (hours24 >= 13 && hours24 < 17) {
+            this.#turnOn('inthe');
+            this.#turnOn('afternoon');
+        }
+
+        if (hours24 >= 17 && hours24 < 19) {
+            this.#turnOn('inthe');
+            this.#turnOn('evening');
+        }
+
+        if (hours24 >= 19 || hours24 === 23) {
+            this.#turnOn('atnight');
         }
 
         const houseClasses = ['twelve', 'one', 'two', 'three', 'four', 'five2', 'six', 'seven', 'eight', 'nine', 'ten2', 'eleven'];
