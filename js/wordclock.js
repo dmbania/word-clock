@@ -1,5 +1,21 @@
 // eslint-disable-next-line no-unused-vars
 class WordClock {
+    // define the wordclock matrix
+    #rowsAndWords = [
+        { words: [{ class: 'itis', word: 'it is' }, { class: 'half', word: 'half' }, { class: 'ten', word: 'ten' }] },
+        { words: [{ class: 'quarter', word: 'a quarter' }, { class: 'twenty', word: 'twenty' }] },
+        { words: [{ class: 'five', word: 'five' }, { class: 'minutes', word: 'minutes' }, { class: 'to', word: 'to' }] },
+        { words: [{ class: 'past', word: 'past' }, { class: 'one', word: 'one' }, { class: 'three', word: 'three' }] },
+        { words: [{ class: 'two', word: 'two' }, { class: 'four', word: 'four' }, { class: 'five2', word: 'five' }] },
+        { words: [{ class: 'six', word: 'six' }, { class: 'seven', word: 'seven' }, { class: 'eight', word: 'eight' }] },
+        { words: [{ class: 'nine', word: 'nine' }, { class: 'ten2', word: 'ten' }, { class: 'eleven', word: 'eleven' }] },
+        { words: [{ class: 'twelve', word: 'twelve' }, { class: 'oclock', word: 'o\'clock' }] },
+        { words: [{ class: 'midnight', word: 'midnight' }, { class: 'noon', word: 'noon' }] },
+        { words: [{ class: 'inthe', word: 'in the' }, { class: 'morning', word: 'morning' }] },
+        { words: [{ class: 'afternoon', word: 'afternoon' }, { class: 'evening', word: 'evening' }] },
+        { words: [{ class: 'atnight', word: 'at night' }] },
+    ];
+
     constructor() {
         this.#draw();
     }
@@ -10,28 +26,12 @@ class WordClock {
         // we'll use the body.
         body = body || document.getElementsByTagName('body');
 
-        // define the wordclock matrix
-        const rowsAndWords = [
-            { words: [{ class: 'itis', word: 'it is' }, { class: 'half', word: 'half' }, { class: 'ten', word: 'ten' }] },
-            { words: [{ class: 'quarter', word: 'a quarter' }, { class: 'twenty', word: 'twenty' }] },
-            { words: [{ class: 'five', word: 'five' }, { class: 'minutes', word: 'minutes' }, { class: 'to', word: 'to' }] },
-            { words: [{ class: 'past', word: 'past' }, { class: 'one', word: 'one' }, { class: 'three', word: 'three' }] },
-            { words: [{ class: 'two', word: 'two' }, { class: 'four', word: 'four' }, { class: 'five2', word: 'five' }] },
-            { words: [{ class: 'six', word: 'six' }, { class: 'seven', word: 'seven' }, { class: 'eight', word: 'eight' }] },
-            { words: [{ class: 'nine', word: 'nine' }, { class: 'ten2', word: 'ten' }, { class: 'eleven', word: 'eleven' }] },
-            { words: [{ class: 'twelve', word: 'twelve' }, { class: 'oclock', word: 'o\'clock' }] },
-            { words: [{ class: 'midnight', word: 'midnight' }, { class: 'noon', word: 'noon' }] },
-            { words: [{ class: 'inthe', word: 'in the' }, { class: 'morning', word: 'morning' }] },
-            { words: [{ class: 'afternoon', word: 'afternoon' }, { class: 'evening', word: 'evening' }] },
-            { words: [{ class: 'atnight', word: 'at night' }] },
-        ];
-
         //	define your clock
         const clockBox = document.createElement('div');
         clockBox.setAttribute('class', 'clock');
 
         //	for each row, and each element in the each row build your wordclock
-        for (const row of rowsAndWords) {
+        for (const row of this.#rowsAndWords) {
             const clockRow = document.createElement('div');
             clockRow.setAttribute('class', 'row');
 
@@ -91,11 +91,19 @@ class WordClock {
         }
     }
 
-    #setTime() {
+    #getDate() {
         const dateTime = new Date();
         const mins = dateTime.getMinutes();
         let hours24 = dateTime.getHours();
         let hours = dateTime.getHours() % 12;
+
+        return {
+            mins, hours24, hours
+        };
+    }
+
+    #setTime() {
+        let { mins, hours24, hours } = this.#getDate();
 
         this.#resetClock();
 
@@ -112,14 +120,13 @@ class WordClock {
             }
         }
 
-        if (hours24 === 0) {
-            this.#turnOn('midnight');
-        }
+        this.#setMidnightNoon(hours24, toAfterModifier);
+        this.#setMorningAfternoonEveningNight(hours24);
+        this.#setHours(hours);
+        this.#setMinutes(mins);
+    }
 
-        if (hours24 === 12) {
-            this.#turnOn('noon');
-        }
-
+    #setMorningAfternoonEveningNight(hours24) {
         if (hours24 >= 1 && hours24 <= 11) {
             this.#turnOn('inthe');
             this.#turnOn('morning');
@@ -138,12 +145,30 @@ class WordClock {
         if (hours24 >= 19 || hours24 === 23) {
             this.#turnOn('atnight');
         }
+    }
 
+    #setMidnightNoon(hours24, toAfterModifier) {
+        if (toAfterModifier === 1) {
+            return;
+        }
+
+        if (hours24 === 0) {
+            this.#turnOn('midnight');
+        }
+
+        if (hours24 === 12) {
+            this.#turnOn('noon');
+        }
+    }
+
+    #setHours(hours) {
         const houseClasses = ['twelve', 'one', 'two', 'three', 'four', 'five2', 'six', 'seven', 'eight', 'nine', 'ten2', 'eleven'];
         this.#turnOn(houseClasses[hours]);
+    }
 
-        //	determine which 5-minutes do we need to display, then turn that word on
-        const fiveMinuteBlock = Math.floor(mins / 5) * 5;
+    //	determine which 5-minutes do we need to display, then turn that word on
+    #setMinutes(minutes) {
+        const fiveMinuteBlock = Math.floor(minutes / 5) * 5;
 
         switch (fiveMinuteBlock) {
             case 5:
